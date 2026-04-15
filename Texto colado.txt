@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diretrizes de Design – Lygia Imbelloni</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --roxo: #5B2D8E;
+      --teal: #0D7377;
+      --amarelo: #F5A623;
+      --pink: #E8186D;
+      --branco: #FFFFFF;
+      --cinza-claro: #F5F5F5;
+      --cinza-texto: #2D2D2D;
+      --cinza-medio: #666666;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: #FAFAFA;
+      color: var(--cinza-texto);
+      line-height: 1.7;
+    }
+
+    /* HEADER */
+    header {
+      background: var(--roxo);
+      color: white;
+      padding: 56px 48px 40px;
+    }
+    header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 12px;
+    }
+    header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    header p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.7);
+      max-width: 520px;
+    }
+
+    /* LAYOUT */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 32px 80px;
+    }
+
+    /* SECTION */
+    .section {
+      margin-bottom: 48px;
+    }
+    .section-title {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cinza-medio);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E5E5E5;
+    }
+
+    /* CARDS DE CORES */
+    .color-grid {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .color-card {
+      flex: 1;
+      min-width: 120px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .color-swatch {
+      height: 72px;
+    }
+    .color-info {
+      background: white;
+      padding: 10px 14px;
+    }
+    .color-name {
+      font-size: 12px;
+      font-weight: 700;
+      display: block;
+    }
+    .color-hex {
+      font-size: 11px;
+      color: var(--cinza-medio);
+    }
+
+    /* REGRA CARD */
+    .rule-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border-left: 4px solid transparent;
+    }
+    .rule-card.green  { border-left-color: #22C55E; }
+    .rule-card.red    { border-left-color: #EF4444; }
+    .rule-card.yellow { border-left-color: var(--amarelo); }
+    .rule-card.teal   { border-left-color: var(--teal); }
+    .rule-card.purple { border-left-color: var(--roxo); }
+
+    .rule-card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .rule-card p, .rule-card li {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.65;
+    }
+    .rule-card ul {
+      padding-left: 20px;
+    }
+    .rule-card ul li {
+      margin-bottom: 4px;
+    }
+
+    /* FONT DEMO */
+    .font-demo {
+      background: white;
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      margin-bottom: 12px;
+    }
+    .font-demo .font-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cinza-medio);
+      margin-bottom: 4px;
+    }
+    .font-demo .font-usage {
+      font-size: 12px;
+      color: var(--pink);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .font-demo .font-sample-raleway {
+      font-family: 'Raleway', sans-serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--cinza-texto);
+    }
+    .font-demo .font-sample-gelica {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--roxo);
+      font-style: italic;
+    }
+    .font-tip {
+      font-size: 12px;
+      color: var(--cinza-medio);
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #EEE;
+    }
+
+    /* DO / DON'T */
+    .do-dont {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 600px) {
+      .do-dont { grid-template-columns: 1fr; }
+    }
+    .do-box, .dont-box {
+      border-radius: 12px;
+      padding: 20px 24px;
+    }
+    .do-box {
+      background: #F0FDF4;
+      border: 1.5px solid #86EFAC;
+    }
+    .dont-box {
+      background: #FEF2F2;
+      border: 1.5px solid #FCA5A5;
+    }
+    .do-box h4 { color: #16A34A; font-size: 13px; font-weight: 700; margin-bottom: 10px; letter-spacing: 1px; }
+    .dont-box h4 { color: #DC2626; font-size: 13px; font-weight: 700; margin-bottom: 10px; letter-spacing: 1px; }
+    .do-box li, .dont-box li {
+      font-size: 13px;
+      color: #444;
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+    ul { list-style: none; }
+    .do-box li::before { content: "✓ "; color: #16A34A; font-weight: 700; }
+    .dont-box li::before { content: "✗ "; color: #DC2626; font-weight: 700; }
+
+    /* AVISO */
+    .aviso {
+      background: #FFFBEB;
+      border: 1.5px solid #FDE68A;
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-size: 13px;
+      color: #92400E;
+      margin-bottom: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .aviso-icon { font-size: 16px; flex-shrink: 0; }
+
+    /* CHECKLIST */
+    .checklist {
+      background: white;
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #F0F0F0;
+      font-size: 14px;
+    }
+    .check-item:last-child { border-bottom: none; }
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #DDD;
+      border-radius: 5px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .check-item span { color: #333; }
+    .check-item .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .tag-red { background: #FEE2E2; color: #DC2626; }
+    .tag-yellow { background: #FEF3C7; color: #B45309; }
+
+    /* PHOTO SECTION */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 600px) {
+      .photo-grid { grid-template-columns: 1fr; }
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--roxo);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 24px;
+      font-size: 12px;
+    }
+    footer strong { color: white; }
+
+    /* BADGE */
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-right: 6px;
+      margin-bottom: 4px;
+    }
+    .badge-red { background: #FEE2E2; color: #DC2626; }
+    .badge-green { background: #DCFCE7; color: #16A34A; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="label">Nomi Studio · Diretrizes de Design</div>
+  <h1>Lygia Imbelloni</h1>
+  <p>Guia de referência para o time de design. Consultar antes de iniciar qualquer post.</p>
+</header>
+
+<div class="container">
+
+  <!-- CORES -->
+  <div class="section">
+    <div class="section-title">Paleta de Cores</div>
+    <div class="color-grid">
+      <div class="color-card">
+        <div class="color-swatch" style="background:#5B2D8E;"></div>
+        <div class="color-info">
+          <span class="color-name">Roxo</span>
+          <span class="color-hex">#5B2D8E</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#0D7377;"></div>
+        <div class="color-info">
+          <span class="color-name">Teal</span>
+          <span class="color-hex">#0D7377</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#F5A623;"></div>
+        <div class="color-info">
+          <span class="color-name">Amarelo</span>
+          <span class="color-hex">#F5A623</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#E8186D;"></div>
+        <div class="color-info">
+          <span class="color-name">Pink</span>
+          <span class="color-hex">#E8186D</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#FFFFFF; border: 1px solid #E5E5E5;"></div>
+        <div class="color-info">
+          <span class="color-name">Branco</span>
+          <span class="color-hex">#FFFFFF</span>
+        </div>
+      </div>
+    </div>
+
+    <br/>
+    <div class="aviso">
+      <span class="aviso-icon">⚠️</span>
+      <span><strong>Nunca usar fora da paleta.</strong> Vermelho, laranja, rosa claro, azul royal e variações de amarelo que não sejam o da marca estão fora. Em caso de dúvida, usar conta-gotas na identidade visual aprovada.</span>
+    </div>
+    <div class="aviso">
+      <span class="aviso-icon">⚠️</span>
+      <span><strong>Fonte branca em fundo amarelo prejudica a leitura.</strong> Evitar essa combinação. Usar texto escuro ou trocar o fundo.</span>
+    </div>
+    <div class="aviso">
+      <span class="aviso-icon">⚠️</span>
+      <span><strong>Fundo pink com elementos do logo em azul/teal</strong> gera destaque excessivo nos elementos, tirando o foco do texto. Evitar essa combinação.</span>
+    </div>
+  </div>
+
+  <!-- TIPOGRAFIA -->
+  <div class="section">
+    <div class="section-title">Tipografia</div>
+
+    <div class="font-demo">
+      <div class="font-label">Raleway</div>
+      <div class="font-usage">Fonte principal · Todo texto corrido</div>
+      <div class="font-sample-raleway">Decisões que se sustentam no tempo.</div>
+      <div class="font-tip">
+        <strong>Usar em:</strong> parágrafos, frases de contexto, enumerações, textos de apoio, qualquer texto que não seja o destaque principal.<br/>
+        <strong>Como reconhecer:</strong> letras sem "pézinhos" (sans-serif), forma limpa e moderna.
+      </div>
+    </div>
+
+    <div class="font-demo">
+      <div class="font-label">Gelica</div>
+      <div class="font-usage">Fonte de destaque · Apenas palavras ou frases de impacto</div>
+      <div class="font-sample-gelica">coloca tudo em você.</div>
+      <div class="font-tip">
+        <strong>Usar em:</strong> palavra ou frase principal do card — o destaque máximo.<br/>
+        <strong>Como reconhecer:</strong> letras com "pézinhos" (serifada), mais elegante e display.<br/>
+        <strong>Regra:</strong> se o texto corrido estiver em Gelica, está errado. Trocar para Raleway.
+      </div>
+    </div>
+
+    <div class="do-dont">
+      <div class="do-box">
+        <h4>✔ CORRETO</h4>
+        <ul>
+          <li>Texto corrido em Raleway</li>
+          <li>Frase de destaque do card em Gelica</li>
+          <li>Uma palavra ou frase por card em Gelica</li>
+        </ul>
+      </div>
+      <div class="dont-box">
+        <h4>✗ ERRADO</h4>
+        <ul>
+          <li>Card inteiro em Gelica</li>
+          <li>Parágrafos em Gelica</li>
+          <li>Gelica em todo o bloco de texto</li>
+          <li>Misturar fontes fora desse sistema</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESTAQUES -->
+  <div class="section">
+    <div class="section-title">Sistema de Destaques</div>
+
+    <div class="do-dont" style="margin-bottom:16px;">
+      <div class="do-box">
+        <h4>✔ PODE USAR</h4>
+        <ul>
+          <li>Gelica (fonte serifada)</li>
+          <li>Negrito em Raleway</li>
+          <li>Cor diferente (amarelo, pink)</li>
+          <li>Caixa de fundo colorida atrás da palavra</li>
+        </ul>
+      </div>
+      <div class="dont-box">
+        <h4>✗ NUNCA USAR</h4>
+        <ul>
+          <li>Sublinhado — em nenhuma situação</li>
+          <li>Itálico em Raleway</li>
+          <li>Caixa alta (ALL CAPS)</li>
+          <li>Aspas para dar destaque</li>
+          <li>Negrito + itálico + sublinhado juntos</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rule-card red">
+      <h3>Sublinhado: proibido</h3>
+      <p>A cliente pediu explicitamente para nunca usar sublinhado. Os destaques devem ser feitos com Gelica, negrito ou caixa de fundo colorida — nunca com linha embaixo do texto.</p>
+    </div>
+
+    <div class="rule-card red">
+      <h3>Itálico em Raleway: proibido</h3>
+      <p>Itálico não é forma de destaque nessa marca. Se um trecho precisar de ênfase, usar negrito ou Gelica.</p>
+    </div>
+  </div>
+
+  <!-- ALINHAMENTO -->
+  <div class="section">
+    <div class="section-title">Alinhamento de Texto</div>
+    <div class="do-dont">
+      <div class="do-box">
+        <h4>✔ ESQUERDA</h4>
+        <ul>
+          <li>Cards com muito texto</li>
+          <li>Parágrafos e blocos de texto corrido</li>
+          <li>Listas ou enumerações</li>
+          <li>Quando há mais de uma frase no card</li>
+        </ul>
+      </div>
+      <div class="do-box">
+        <h4>✔ CENTRALIZADO</h4>
+        <ul>
+          <li>Frase única e curta</li>
+          <li>Cards de capa com impacto visual</li>
+          <li>Destaque isolado com poucas palavras</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELEMENTOS DA MARCA -->
+  <div class="section">
+    <div class="section-title">Elementos da Marca</div>
+    <div class="rule-card teal">
+      <h3>Formas fluidas e bolas conectadas</h3>
+      <p>Fazem parte da logo. Podem aparecer em qualquer posição do card, inclusive saindo das margens — isso é intencional. <strong>Nunca questionar ou remover esses elementos.</strong></p>
+    </div>
+    <div class="rule-card teal">
+      <h3>Caixas de destaque retangulares</h3>
+      <p>Fundo teal, roxo ou outra cor da paleta atrás de uma palavra ou frase fazem parte do sistema de design aprovado. Não é erro.</p>
+    </div>
+    <div class="rule-card red">
+      <h3>O que não usar</h3>
+      <ul>
+        <li>Caixas com fundo desfocado ou sombra atrás do texto</li>
+        <li>Elementos completamente novos que nunca foram aprovados</li>
+        <li>Retângulos com bordas duras que não combinam com o visual orgânico</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FOTOS -->
+  <div class="section">
+    <div class="section-title">Fotos e Imagens</div>
+
+    <div class="aviso">
+      <span class="aviso-icon">ℹ️</span>
+      <span>Todas as fotos usadas devem ser do banco de imagens aprovado pela Lygia (pasta no Drive do studio). Não usar fotos fora desse banco.</span>
+    </div>
+
+    <div class="photo-grid">
+      <div class="rule-card green">
+        <h3>✔ Pode usar</h3>
+        <ul style="padding-left:16px; list-style: disc;">
+          <li>Diversidade de corpos — aprovada</li>
+          <li>Cabelo branco — pode, desde que aparência seja de 35–55 anos</li>
+          <li>Mulher negra sorrindo — aprovada explicitamente</li>
+          <li>Expressão séria ou neutra</li>
+        </ul>
+      </div>
+      <div class="rule-card red">
+        <h3>✗ Não usar</h3>
+        <ul style="padding-left:16px; list-style: disc;">
+          <li>Modelo com tatuagem se usada em post recente</li>
+          <li>Roupa com padronagem muito geométrica</li>
+          <li>Vestido todo fechado em cima (ficou estranho)</li>
+          <li>Aparência de +65 anos (faixa: 35–55)</li>
+          <li>Sorriso largo estilo comercial de cosmético</li>
+          <li>Contexto de autoajuda, banco ou cosmético</li>
+          <li>Corpo cortado de forma estranha</li>
+          <li>Figura desproporcional no frame</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rule-card yellow" style="margin-top:12px;">
+      <h3>Foto da Lygia</h3>
+      <p>Nunca colocar o selo azul de verificação — ela não tem no Instagram. Nunca cortar partes do corpo de forma estranha. Não deixar a figura desproporcional no frame.</p>
+    </div>
+  </div>
+
+  <!-- DIAGRAMAÇÃO -->
+  <div class="section">
+    <div class="section-title">Diagramação de Texto</div>
+
+    <div class="rule-card red">
+      <h3>Quebra de linha — regras</h3>
+      <ul>
+        <li>Nunca separar palavra com hífen automático</li>
+        <li>Evitar palavra sozinha na última linha (palavra viúva)</li>
+        <li>Evitar artigo ou preposição sozinho no fim de linha (ex: "o", "de", "a", "um")</li>
+        <li>Não separar palavras que precisam ficar juntas semanticamente</li>
+      </ul>
+    </div>
+
+    <div class="rule-card red">
+      <h3>Pontuação</h3>
+      <ul>
+        <li>Sempre ponto final em frases completas</li>
+        <li>Se uma série tem 3 itens e 2 têm ponto final, o terceiro também precisa ter</li>
+        <li>Sempre espaço depois de vírgula ou dois pontos</li>
+        <li>Não colocar ponto onde não deve (ex: títulos curtos, listas que continuam)</li>
+      </ul>
+    </div>
+
+    <div class="rule-card yellow">
+      <h3>Espaçamento</h3>
+      <ul>
+        <li>Espaço suficiente entre blocos de texto diferentes</li>
+        <li>Respiro entre título/destaque e parágrafo seguinte</li>
+        <li>Texto deve estar dentro da zona segura do grid — não colar na borda</li>
+      </ul>
+    </div>
+
+    <div class="rule-card yellow">
+      <h3>Tamanho de fonte entre cards</h3>
+      <p>O tamanho do texto deve parecer equivalente em todos os cards do mesmo post. Comparar sempre antes de finalizar.</p>
+    </div>
+  </div>
+
+  <!-- ORIENTAÇÕES RECORRENTES -->
+  <div class="section">
+    <div class="section-title">Orientações Recorrentes da Cliente</div>
+    <div class="rule-card purple">
+      <ul style="padding-left:0; list-style:none;">
+        <li style="padding: 8px 0; border-bottom: 1px solid #EEE;">🚫 Nunca usar sublinhado</li>
+        <li style="padding: 8px 0; border-bottom: 1px solid #EEE;">🚫 Evitar itálico</li>
+        <li style="padding: 8px 0; border-bottom: 1px solid #EEE;">✏️ Fonte principal é Raleway — texto corrido sempre em Raleway</li>
+        <li style="padding: 8px 0; border-bottom: 1px solid #EEE;">✏️ Gelica é fonte de destaque e de título — não de texto corrido</li>
+        <li style="padding: 8px 0; border-bottom: 1px solid #EEE;">🎨 Fonte branca em fundo amarelo prejudica a leitura — evitar</li>
+        <li style="padding: 8px 0; border-bottom: 1px solid #EEE;">🎨 Fundo pink com elementos do logo em azul tira o foco do texto — evitar</li>
+        <li style="padding: 8px 0; border-bottom: 1px solid #EEE;">📐 Muito texto → alinhar à esquerda</li>
+        <li style="padding: 8px 0;">📐 Pouco texto ou frase única → pode centralizar</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CHECKLIST RÁPIDO -->
+  <div class="section">
+    <div class="section-title">Checklist Antes de Subir o Post</div>
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>Texto corrido está em Raleway (não em Gelica)</span>
+        <span class="tag tag-red">Crítico</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>Gelica usado apenas no destaque principal do card</span>
+        <span class="tag tag-red">Crítico</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>Nenhum sublinhado em nenhum card</span>
+        <span class="tag tag-red">Crítico</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>Nenhum itálico em Raleway</span>
+        <span class="tag tag-red">Crítico</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>Todas as cores são da paleta aprovada</span>
+        <span class="tag tag-red">Crítico</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>Ponto final em todas as frases que precisam ter</span>
+        <span class="tag tag-red">Crítico</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>Nenhuma palavra separada por hífen</span>
+        <span class="tag tag-red">Crítico</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>Texto corrido com mais de uma frase está alinhado à esquerda</span>
+        <span class="tag tag-yellow">Importante</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>Nenhuma palavra viúva (sozinha na última linha)</span>
+        <span class="tag tag-yellow">Importante</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>Nenhum artigo ou preposição sozinho no fim de linha</span>
+        <span class="tag tag-yellow">Importante</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>Tamanho de fonte equivalente entre todos os cards</span>
+        <span class="tag tag-yellow">Importante</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>Foto é do banco aprovado e sem problemas visíveis</span>
+        <span class="tag tag-yellow">Importante</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>Modelo com tatuagem não foi usada em post recente</span>
+        <span class="tag tag-yellow">Importante</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>Espaço suficiente entre blocos de texto</span>
+        <span class="tag tag-yellow">Importante</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <span>Texto dentro da zona segura do grid (não colado na borda)</span>
+        <span class="tag tag-yellow">Importante</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <strong>Nomi Studio</strong> · Diretrizes de Design – Lygia Imbelloni · Uso interno
+</footer>
+
+</body>
+</html>
